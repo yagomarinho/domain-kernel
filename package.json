@@ -1,0 +1,21 @@
+{
+  "name": "@yagomarinho/domain-kernel",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "author": {
+    "name": "Yago Marinho",
+    "email": "marinho.rj2@hotmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yagomarinho/davna.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^5.9.3"
+  }
+}
