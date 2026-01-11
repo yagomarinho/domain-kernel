@@ -25,6 +25,4 @@ export type ValueObjectURI = typeof ValueObjectURI
  */
 
 export interface ValueObjectMeta<T extends ValueObjectURIS = ValueObjectURIS>
-  extends Resource<ValueObjectURI>,
-    Tag<T>,
-    Idempotent {}
+  extends Resource<ValueObjectURI>, Tag<T>, Idempotent {}
