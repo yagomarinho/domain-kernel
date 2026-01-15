@@ -21,11 +21,8 @@ export type EventURI = typeof EventURI
 export interface EventMeta<
   T extends EventURIS = EventURIS,
   V extends Version = Version,
-> extends Resource<EventURI>,
-    Timestamped,
-    Identifiable,
-    Tag<T>,
-    Versioned<V> {
+>
+  extends Resource<EventURI>, Timestamped, Identifiable, Tag<T>, Versioned<V> {
   readonly occurred_at: Date
   readonly causation_id: string
   readonly correlation_id: string

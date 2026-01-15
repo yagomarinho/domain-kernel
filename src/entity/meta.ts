@@ -19,18 +19,26 @@ import { EntityURIS } from './types'
 export const EntityURI = 'entity'
 export type EntityURI = typeof EntityURI
 
+interface EntityMetaBase<
+  T extends EntityURIS = EntityURIS,
+  V extends Version = Version,
+>
+  extends Resource<EntityURI>, Idempotent, Tag<T>, Versioned<V> {}
+export interface DraftEntityMeta<
+  T extends EntityURIS = EntityURIS,
+  V extends Version = Version,
+>
+  extends EntityMetaBase<T, V>, Partial<Identifiable>, Partial<Auditable> {}
+
 /**
  * Metadata shared by all entities.
  *
  * This structure is responsible for identity, auditing
  * and resource discrimination.
  */
+
 export interface EntityMeta<
   T extends EntityURIS = EntityURIS,
   V extends Version = Version,
-> extends Resource<EntityURI>,
-    Identifiable,
-    Auditable,
-    Idempotent,
-    Tag<T>,
-    Versioned<V> {}
+>
+  extends EntityMetaBase<T, V>, Identifiable, Auditable {}

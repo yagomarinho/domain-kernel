@@ -31,13 +31,3 @@ export interface Entity<
   readonly meta: EntityMeta<T, V>
   readonly props: Readonly<P>
 }
-
-/**
- * Draft version of an entity.
- *
- * Used during creation or reconstruction phases
- * where metadata may not yet exist.
- */
-export type DraftEntity<E extends Entity> = Omit<E, 'meta'> & {
-  meta?: E['meta']
-}

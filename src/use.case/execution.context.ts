@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from './composition'
-export * from './entity'
-export * from './event'
-export * from './use.case'
-export * from './value-object'
+export interface ExecutionContext {
+  request_id: string
+  correlation_id: string
+  idempotency_key: string
+  timestamp: Date
+  origin: string
+}

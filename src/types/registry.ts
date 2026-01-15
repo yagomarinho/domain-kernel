@@ -17,9 +17,7 @@ import { ValueObjectURItoKind } from '../value-object'
  */
 
 export interface BuildableURItoKind
-  extends EntityURItoKind,
-    EventURItoKind,
-    ValueObjectURItoKind {}
+  extends EntityURItoKind, EventURItoKind, ValueObjectURItoKind {}
 
 /**
  * Type representing all valid buildable URIs.
