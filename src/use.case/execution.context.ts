@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export interface ExecutionContext {
+import { Idempotent } from '../composition'
+
+export interface ExecutionContext extends Idempotent {
   request_id: string
   correlation_id: string
-  idempotency_key: string
   timestamp: Date
   origin: string
 }

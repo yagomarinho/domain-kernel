@@ -24,6 +24,7 @@
     "url": "git+https://github.com/yagomarinho/domain-kernel.git"
   },
   "dependencies": {
+    "@yagomarinho/utils-toolkit": "^0.2.0",
     "typescript": "^5.9.3"
   },
   "publishConfig": {

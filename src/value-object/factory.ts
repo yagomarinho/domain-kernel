@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Buildable } from '../composition'
 import { ValueObjectMeta } from './meta'
-import { ValueObjectOf, ValueObjectURIS } from './types'
+import { ValueObjectOf, ValueObjectURIS, ValueObjectURItoKind } from './types'
 
 /**
  * Factory function for creating value objects.
@@ -18,9 +19,11 @@ import { ValueObjectOf, ValueObjectURIS } from './types'
 export function createValueObject<P extends {}, T extends ValueObjectURIS>(
   props: P,
   meta: ValueObjectMeta<T>,
+  builder: Buildable<ValueObjectURItoKind[T]['props'], T>['builder'],
 ): ValueObjectOf<T> {
   return {
     props,
     meta,
+    builder,
   } as any
 }

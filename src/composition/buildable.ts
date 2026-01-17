@@ -5,7 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { EntityMeta, EntityURIS } from '../entity'
 import { BuildableURIS, BuildOf } from '../types'
+import { Version } from './versioned'
+
+export type MetaInit<T extends EntityURIS, V extends Version> = Omit<
+  EntityMeta<T, V>,
+  'tag' | 'version' | 'resource'
+>
 
 /**
  * Buildable contract for entities.
@@ -17,7 +24,7 @@ import { BuildableURIS, BuildOf } from '../types'
  * - T: entity URI used to resolve the concrete entity type
  */
 
-export interface Buildable<P, T extends BuildableURIS> {
+export interface Buildable<P, T extends string> {
   /**
    * Build function.
    *
@@ -26,5 +33,7 @@ export interface Buildable<P, T extends BuildableURIS> {
    * with the given entity URI.
    */
 
-  readonly builder: (props: P, meta: BuildOf<T>['meta']) => BuildOf<T>
+  readonly builder: T extends BuildableURIS
+    ? (props: P, meta: MetaInit<T, BuildOf<T>['meta']['version']>) => BuildOf<T>
+    : (props: P, meta: any) => any
 }

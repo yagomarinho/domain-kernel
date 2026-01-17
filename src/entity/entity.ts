@@ -9,6 +9,7 @@ import { Version } from '../composition'
 import { Buildable } from '../composition/buildable'
 import { EntityURIS } from './types'
 import { EntityMeta } from './meta'
+import { DraftEntity } from './draft.entity'
 
 /**
  * Core Entity interface.
@@ -30,4 +31,17 @@ export interface Entity<
 > extends Buildable<P, T> {
   readonly meta: EntityMeta<T, V>
   readonly props: Readonly<P>
+}
+
+/**
+ * Structural entity check.
+ *
+ * Validates shape and resource identity,
+ * but does NOT validate identifier semantics.
+ */
+
+export function isEntity<E extends Entity>(
+  entity: DraftEntity<E>,
+): entity is E {
+  return !!(entity.meta.id && entity.meta.created_at && entity.meta.updated_at)
 }

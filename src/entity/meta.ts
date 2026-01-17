@@ -14,16 +14,14 @@ import {
   Version,
   Versioned,
 } from '../composition'
-import { EntityURIS } from './types'
+import { EntityMetaOf, EntityURIS, VersionOfEntity } from './types'
 
 export const EntityURI = 'entity'
 export type EntityURI = typeof EntityURI
 
-interface EntityMetaBase<
-  T extends EntityURIS = EntityURIS,
-  V extends Version = Version,
->
+interface EntityMetaBase<T extends EntityURIS, V extends Version>
   extends Resource<EntityURI>, Idempotent, Tag<T>, Versioned<V> {}
+
 export interface DraftEntityMeta<
   T extends EntityURIS = EntityURIS,
   V extends Version = Version,
@@ -42,3 +40,41 @@ export interface EntityMeta<
   V extends Version = Version,
 >
   extends EntityMetaBase<T, V>, Identifiable, Auditable {}
+
+export interface CreateMetaParams<T extends EntityURIS>
+  extends
+    Omit<EntityMetaBase<T, VersionOfEntity<T>>, 'resource'>,
+    Partial<Identifiable>,
+    Partial<Auditable> {}
+
+export type CreateDraftMetaParams<T extends EntityURIS> = Omit<
+  CreateMetaParams<T>,
+  'id' | 'created_at' | 'updated_at'
+>
+
+export function createEntityMeta<T extends EntityURIS>(
+  data: CreateDraftMetaParams<T>,
+): DraftEntityMeta<T, VersionOfEntity<T>>
+export function createEntityMeta<T extends EntityURIS>(
+  data: Required<CreateMetaParams<T>>,
+): EntityMetaOf<T>
+export function createEntityMeta<T extends EntityURIS>({
+  id,
+  created_at,
+  updated_at,
+  idempotency_key,
+  tag,
+  version,
+}: CreateMetaParams<T>):
+  | DraftEntityMeta<T, VersionOfEntity<T>>
+  | EntityMetaOf<T> {
+  return {
+    id,
+    resource: 'entity',
+    created_at,
+    updated_at,
+    idempotency_key,
+    tag,
+    version,
+  }
+}

@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+export * from './draft.entity'
 export * from './entity'
 export * from './factory'
 export * from './meta'

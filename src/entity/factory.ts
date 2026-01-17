@@ -5,10 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Buildable } from '../composition'
-import { DraftEntity } from './entity'
-import { EntityMeta } from './meta'
-import { EntityURIS, EntityURItoKind } from './types'
+import { Buildable, MetaInit } from '../composition'
+import { DraftEntity } from './draft.entity'
+import { DraftEntityMeta, EntityMeta } from './meta'
+import {
+  EntityURIS,
+  EntityURItoKind,
+  PropsOfEntity,
+  VersionOfEntity,
+} from './types'
+
+export type CreateEntityMetaInit<T extends EntityURIS> = MetaInit<
+  T,
+  VersionOfEntity<T>
+>
+
+export type CreateDraftEntityMetaInit<T extends EntityURIS> = Partial<
+  Omit<MetaInit<T, VersionOfEntity<T>>, 'id' | 'created_at' | 'updated_at'>
+>
 
 /**
  * Creates a new entity instance, either as a draft (without metadata)
@@ -25,31 +39,34 @@ import { EntityURIS, EntityURItoKind } from './types'
 
 export function createEntity<T extends EntityURIS>(
   tag: T,
-  version: EntityURItoKind[T]['version'],
-  builder: Buildable<EntityURItoKind[T]['props'], T>['builder'],
-  props: EntityURItoKind[T]['props'],
+  version: VersionOfEntity<T>,
+  builder: Buildable<PropsOfEntity<T>, T>['builder'],
+  props: PropsOfEntity<T>,
+  meta: DraftEntityMeta<T, VersionOfEntity<T>>,
 ): DraftEntity<EntityURItoKind[T]>
 
 export function createEntity<T extends EntityURIS>(
   tag: T,
-  version: EntityURItoKind[T]['version'],
-  builder: Buildable<EntityURItoKind[T]['props'], T>['builder'],
-  props: EntityURItoKind[T]['props'],
-  meta: EntityMeta,
+  version: VersionOfEntity<T>,
+  builder: Buildable<PropsOfEntity<T>, T>['builder'],
+  props: PropsOfEntity<T>,
+  meta: EntityMeta<T, VersionOfEntity<T>>,
 ): EntityURItoKind[T]
 
 export function createEntity<T extends EntityURIS>(
   tag: T,
-  version: EntityURItoKind[T]['version'],
-  builder: Buildable<EntityURItoKind[T]['props'], T>['builder'],
-  props: EntityURItoKind[T]['props'],
-  meta?: EntityMeta,
-): any {
+  version: VersionOfEntity<T>,
+  builder: Buildable<PropsOfEntity<T>, T>['builder'],
+  props: PropsOfEntity<T>,
+  meta:
+    | DraftEntityMeta<T, VersionOfEntity<T>>
+    | EntityMeta<T, VersionOfEntity<T>>,
+) {
   return {
-    builder,
-    tag,
-    version,
     props,
     meta,
+    tag,
+    version,
+    builder,
   }
 }

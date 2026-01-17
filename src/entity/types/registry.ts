@@ -30,3 +30,8 @@ export type EntityURIS = keyof EntityURItoKind
  */
 
 export type EntityOf<URI extends EntityURIS> = EntityURItoKind[URI]
+export type EntityMetaOf<URI extends EntityURIS> = EntityURItoKind[URI]['meta']
+export type PropsOfEntity<URI extends EntityURIS> =
+  EntityURItoKind[URI]['props']
+export type VersionOfEntity<URI extends EntityURIS> =
+  EntityMetaOf<URI>['version']

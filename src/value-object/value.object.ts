@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Buildable } from '../composition'
 import { ValueObjectMeta } from './meta'
 import { ValueObjectURIS } from './types'
 
@@ -20,7 +21,7 @@ import { ValueObjectURIS } from './types'
 export interface ValueObject<
   P extends {} = {},
   T extends ValueObjectURIS = ValueObjectURIS,
-> {
+> extends Buildable<P, T> {
   props: Readonly<P>
   meta: ValueObjectMeta<T>
 }
