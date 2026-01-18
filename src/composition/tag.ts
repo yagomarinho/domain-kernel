@@ -12,6 +12,6 @@
  * resource or domain boundary.
  */
 
-export interface Tag<U extends string> {
+export interface Tag<U extends string = string> {
   readonly tag: U
 }
