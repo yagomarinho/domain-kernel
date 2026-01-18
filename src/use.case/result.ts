@@ -29,20 +29,20 @@ export function Result(type: FailureURI | SuccessfulURI, data: any): Result {
   return type === FailureURI ? Failure(data) : Successful(data)
 }
 
-function _throw(): Failure<undefined>
-function _throw<E>(error: E): Failure<E>
-function _throw<E>(error?: E): Failure<E> {
+function fail(): Failure<undefined>
+function fail<E>(error: E): Failure<E>
+function fail<E>(error?: E): Failure<E> {
   return Failure(error as E)
 }
 
-function done(): Successful<undefined>
-function done<D>(data: D): Successful<D>
-function done<D>(data?: D): Successful<D> {
+function ok(): Successful<undefined>
+function ok<D>(data: D): Successful<D>
+function ok<D>(data?: D): Successful<D> {
   return Successful(data as D)
 }
 
-Result.throw = _throw
-Result.done = done
+Result.fail = fail
+Result.ok = ok
 
 export function Failure<E>(error: E): Failure<E> {
   return {
