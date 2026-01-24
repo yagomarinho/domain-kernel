@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { isObject } from '@yagomarinho/utils-toolkit'
+
 /**
  * Represents a semantic tag discriminator.
  *
@@ -14,4 +16,8 @@
 
 export interface Tag<U extends string = string> {
   readonly tag: U
+}
+
+export function isTagged(tagged: unknown): tagged is Tag {
+  return isObject(tagged) && 'tag' in tagged
 }

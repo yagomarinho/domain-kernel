@@ -58,10 +58,10 @@ export function Successful<D>(data: D): Successful<D> {
   }
 }
 
-export function isFailure(result: Result): result is Failure {
+export function isFailure(result: Tag): result is Failure {
   return result.tag === FailureURI
 }
 
-export function isSuccessful(result: Result): result is Successful {
+export function isSuccessful(result: Tag): result is Successful {
   return result.tag === SuccessfulURI
 }
